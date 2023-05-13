@@ -20,10 +20,10 @@ log = get_vex_logger(__name__)
 
 class ButtonPoll(commands.Cog):
     """
-    Create polls with buttons, and get a pie chart afterwards!
+    Create votes with buttons, and get a pie chart afterwards!
     """
 
-    __author__ = "Vexed#3211"
+    __author__ = "Klaus"
     __version__ = "1.1.2"
 
     def __init__(self, bot: Red) -> None:
@@ -98,10 +98,10 @@ class ButtonPoll(commands.Cog):
     @commands.command(alias=["poll", "bpoll"])
     async def buttonpoll(self, ctx: commands.Context, chan: Optional[TextChannel] = None):
         """
-        Start a button-based poll
+        Start a button-based vote
 
         This is an interactive setup. By default the current channel will be used,
-        but if you want to start a poll remotely you can send the channel name
+        but if you want to start a vote remotely you can send the channel name
         along with the buttonpoll command.
 
         **Examples:**
@@ -117,21 +117,21 @@ class ButtonPoll(commands.Cog):
         if not channel.permissions_for(ctx.author).send_messages:  # type:ignore
             return await ctx.send(
                 f"You don't have permission to send messages in {channel.mention}, so I can't "
-                "start a poll there."
+                "start a vote there."
             )
         if not channel.permissions_for(ctx.me).send_messages:  # type:ignore
             return await ctx.send(
                 f"I don't have permission to send messages in {channel.mention}, so I can't "
-                "start a poll there."
+                "start a vote there."
             )
 
         view = StartSetupView(author=ctx.author, channel=channel, cog=self)
-        await ctx.send("Click below to start a poll!", view=view)
+        await ctx.send("Click below to start a vote!", view=view)
 
     @app_commands.guild_only()
     @app_commands.default_permissions(manage_messages=True)
     @app_commands.describe(
-        channel="Channel to start the poll in.",
+        channel="Channel to start the vote in.",
         question="Question to ask.",
         description="An optional description.",
         duration="Duration of the poll. Examples: 1 day, 1 minute, 4 hours",
@@ -141,7 +141,7 @@ class ButtonPoll(commands.Cog):
         choice4="Optional fourth choice.",
         choice5="Optional fifth choice.",
     )
-    @app_commands.command(name="poll", description="Start a button-based poll.")
+    @app_commands.command(name="poll", description="Start a button-based vote.")
     async def poll_slash(
         self,
         interaction: discord.Interaction,
@@ -211,7 +211,7 @@ class ButtonPoll(commands.Cog):
                 log.verbose("ButtonPoll loop finished.")
             except Exception as e:
                 log.exception(
-                    "Something went wrong with the ButtonPoll loop. Please report this to Vexed.",
+                    "Something went wrong with the vote loop. Please report this to Klaus.",
                     exc_info=e,
                 )
                 self.loop_meta.iter_error(e)
